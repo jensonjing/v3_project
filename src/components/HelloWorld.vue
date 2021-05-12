@@ -1,8 +1,6 @@
 <template>
   <div class="hello">
     <div>{{msg}}</div>
-    <el-button type="primary">主要按钮</el-button>
-    <el-button type="primary" round @click="goAbout">跳转</el-button>
     <el-button type="primary" round @click="goParent">向父组件传参</el-button>
   </div>
 </template>
@@ -13,20 +11,18 @@ export default {
   props: {
     msg: String
   },
-  mounted(){
+  created() {
     this.$bus.on('set',res=>{
       console.log(res);
     })
   },
+  mounted(){
+    
+  },
+  beforeUnmount(){//组件销毁前清除事件绑定及定时器等
+    this.$bus.all.clear();
+  },
   methods:{
-    goAbout(){
-      this.$router.push({
-        name:'About',
-        params:{
-          id:2
-        }
-      })
-    },
     goParent(){
       this.$emit('goname','参数');
     }

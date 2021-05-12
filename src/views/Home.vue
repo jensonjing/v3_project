@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <HelloWorld msg="Welcome to Your Vue.js App" @goname='goname'/>
-    <el-button @click="subdata">提交</el-button>
+    <el-button type="primary" round @click="goAbout">跳转及bus传参</el-button>
   </div>
 </template>
 
@@ -18,9 +18,6 @@ export default {
     this.getData();
   },
   methods:{
-    subdata(){
-      this.$bus.emit('set',2);
-    },
     getData(){
       this.$https.getidentity({}).then(res=>{
         console.log(res)
@@ -28,6 +25,15 @@ export default {
     },
     goname(data){
       console.log(data);
+    },
+    goAbout(){
+      this.$bus.emit('set',2);
+      this.$router.push({
+        name:'About',
+        params:{
+          id:2
+        }
+      })
     }
   }
 }
