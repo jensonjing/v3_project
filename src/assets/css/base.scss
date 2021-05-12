@@ -1,0 +1,49 @@
+// //定义默认字体大小(根据实际情况自由调整)
+// $browser-default-font-size:37.5px!default;//iphone6
+// html,body{
+//     font-size:$browser-default-font-size;
+// }
+// @function px2rem($px){
+//     @return $px/$browser-default-font-size*1rem;
+// }
+*{
+    margin: 0;
+    padding: 0;
+    outline-style: none;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+li{
+    list-style: none;
+}
+.clearfix::before{
+    clear: both;
+    display: block;
+    content: '.';
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix::after{
+    clear: both;
+    display: block;
+    content: '.';
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix::before,.clearfix::after{
+    *zoom:1;
+}
+.ell{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.ivu-layout-header{
+    background:transparent;
+}
