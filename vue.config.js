@@ -1,4 +1,4 @@
-//使用gzip压缩（需服务端<nginx>同时开启gzip_static功能）
+//使用gzip压缩（需服务端<nginx>同时开启gzip_static功能）//注意：最好安装6.x以前版本否则会报错
 const CompressionPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i;
 
@@ -36,18 +36,24 @@ module.exports = {
             }
         }
     },
-    configureWebpack: {
-        plugins:[
-            new WebpackBar(),
-            //打包时再打开
-            // new CompressionPlugin({
-            //     filename: '[path].gz[query]',//压缩后的文件名
-            //     algorithm: 'gzip', //压缩算法/功能
-            //     test: productionGzipExtensions, //匹配项目文件，以js或者以css结尾的才执行压缩
-            //     threshold: 10240, //仅处理大于此大小的资产（以字节为单位）
-            //     minRatio: 0.8, //仅压缩比该比率更好的资产（minRatio = Compressed Size / Original Size）
-            //     deleteOriginalAssets: true //是否删除原始文件
-            // })
-        ]
+    configureWebpack: config =>{
+        const plugs = [
+            new WebpackBar()
+        ];
+        if(process.env.NODE_ENV === 'production'){
+            plugs.push(
+                new CompressionPlugin({
+                    filename: '[path].gz[query]',//压缩后的文件名
+                    algorithm: 'gzip', //压缩算法/功能
+                    test: productionGzipExtensions, //匹配项目文件，以js或者以css结尾的才执行压缩
+                    threshold: 10240, //仅处理大于此大小的资产（以字节为单位）
+                    minRatio: 0.8, //仅压缩比该比率更好的资产（minRatio = Compressed Size / Original Size）
+                    deleteOriginalAssets: false //是否删除原始文件
+                })
+            )
+        }
+        return{
+            plugins:plugs
+        }
     }
 };
